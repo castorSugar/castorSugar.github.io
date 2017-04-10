@@ -6,23 +6,23 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="在 Github 上的个人博客">
-    <meta name="keyword" content="null">
+    <meta name="description" content="关于网站前端设计与开发的技术,在 Github 上的个人博客">
+    <meta name="keyword" content="HTML CSS Javascript">
     <meta name="theme-color" content="#600090">
     <meta name="msapplication-navbutton-color" content="#600090">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
     <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
-    <link rel="alternate" type="application/atom+xml" title="The Blog" href="/atom.xml">
+    <link rel="alternate" type="application/atom+xml" title="Castor Sugar" href="/atom.xml">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Search express in WeChat mini program｜The Blog
+        Search express in WeChat mini program｜Web Blog
         
     </title>
 
-    <link rel="canonical" href="http://haojen.github.io/2017/04/07/Search-express-in-WeChat-mini-program/">
+    <link rel="canonical" href="http://castorSugar.github.io/2017/04/07/Search-express-in-WeChat-mini-program/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -56,7 +56,7 @@
             </button>
             <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
-                    The Blog
+                    Castor Sugar
                 </span>
                 's Blog
             </a>
@@ -76,6 +76,14 @@
                         <a href="/">Home</a>
                     </li>
 					
+                    
+                        
+							
+                        <li>
+                            <a href="/help/">help</a>
+                        </li>
+							
+						
                     
 					
 					
@@ -147,6 +155,9 @@
                     </span>
                     <div class="tags text-center">
                         
+                        <a class="tag" href="/tags/#小程序"
+                           title="小程序">小程序</a>
+                        
                     </div>
                 </div>
             </div>
@@ -165,7 +176,22 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                
+                <h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>在微信小程序上开发快递即时查询功能板块</p>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><p>微信Web开发者工具</p>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><h4 id="生成原始项目"><a href="#生成原始项目" class="headerlink" title="生成原始项目"></a>生成原始项目</h4><p>勾选在当前目录中创建 quick start 项目</p>
+<h4 id="配置页面属性"><a href="#配置页面属性" class="headerlink" title="配置页面属性"></a>配置页面属性</h4><p>在pages/index/index.wxml中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">        &quot;navigationBarTitleText&quot;:&quot;快递查询&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="设计页面结构"><a href="#设计页面结构" class="headerlink" title="设计页面结构"></a>设计页面结构</h4><p>在pages/index/index.wxml中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&lt;view class=&quot;container&quot;&gt;</div><div class="line">  &lt;input placeholder=&quot;&#123;&#123;corporationText&#125;&#125;&quot; bindinput=&quot;corInput&quot; /&gt;</div><div class="line">  &lt;input placeholder=&quot;&#123;&#123;numberText&#125;&#125;&quot; bindinput=&quot;numInput&quot; /&gt;</div><div class="line">  &lt;button type=&quot;primary&quot; bindtap=&quot;expressSearch&quot;&gt;&#123;&#123;searchBtnText&#125;&#125;&lt;/button&gt;</div><div class="line">  &lt;scroll-view scroll-y=&quot;true&quot; style=&quot;height:200rpx;&quot;&gt;</div><div class="line">      &lt;view wx:for=&quot;&#123;&#123;expressInfo.data&#125;&#125;&quot;&gt;</div><div class="line">          &#123;&#123;item.time&#125;&#125;</div><div class="line">          &#123;&#123;item.content&#125;&#125;</div><div class="line">      &lt;/view&gt;</div><div class="line">  &lt;/scroll-view&gt;</div><div class="line">&lt;/view&gt;</div></pre></td></tr></table></figure>
+<h4 id="设计页面布局"><a href="#设计页面布局" class="headerlink" title="设计页面布局"></a>设计页面布局</h4><p>在pages/index/index.wxss中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">input&#123;</div><div class="line">    width: 80%;</div><div class="line">    margin: 5%;</div><div class="line">    padding: 5%;</div><div class="line">    border: 1px solid #eee;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="设计应用逻辑"><a href="#设计应用逻辑" class="headerlink" title="设计应用逻辑"></a>设计应用逻辑</h4><p>在app.js中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">App(&#123;</div><div class="line">  onLaunch: function () &#123;</div><div class="line">    //调用API从本地缓存中获取数据</div><div class="line">    var logs = wx.getStorageSync(&apos;logs&apos;) || []</div><div class="line">    logs.unshift(Date.now())</div><div class="line">    wx.setStorageSync(&apos;logs&apos;, logs)</div><div class="line">  &#125;,</div><div class="line">  getUserInfo:function(cb)&#123;</div><div class="line">    var that = this</div><div class="line">    if(this.globalData.userInfo)&#123;</div><div class="line">      typeof cb == &quot;function&quot; &amp;&amp; cb(this.globalData.userInfo)</div><div class="line">    &#125;else&#123;</div><div class="line">      //调用登录接口</div><div class="line">      wx.login(&#123;</div><div class="line">        success: function () &#123;</div><div class="line">          wx.getUserInfo(&#123;</div><div class="line">            success: function (res) &#123;</div><div class="line">              that.globalData.userInfo = res.userInfo</div><div class="line">              typeof cb == &quot;function&quot; &amp;&amp; cb(that.globalData.userInfo)</div><div class="line">            &#125;</div><div class="line">          &#125;)</div><div class="line">        &#125;</div><div class="line">      &#125;)</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  globalData:&#123;</div><div class="line">    userInfo:null</div><div class="line">  &#125;,</div><div class="line">  /*</div><div class="line">  * 快递查询</div><div class="line">  * http://www.kuaidiapi.cn/</div><div class="line">  * 快递公司编码必填</div><div class="line">  * 物流单号必填</div><div class="line">  */</div><div class="line">  getExpressInfo:function(cor,num,cb)&#123;</div><div class="line">    var uid = &apos;86640&apos;</div><div class="line">    var key = &apos;73cea0385e6943d2b4d255011ca950ae&apos;</div><div class="line">    var order = num</div><div class="line">    var id = cor</div><div class="line">    var issign = false</div><div class="line">    wx.request(&#123;</div><div class="line">      url: &apos;http://www.kuaidiapi.cn/rest/?uid=&apos; + uid + &apos;&amp;key=&apos; + key + &apos;&amp;order=&apos; + order + &apos;&amp;id=&apos; + id + &apos;&amp;issign=&apos; + issign,</div><div class="line">      data: &#123;&#125;,</div><div class="line">      method: &apos;GET&apos;, // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT</div><div class="line">      // header: &#123;&#125;, // 设置请求的 header</div><div class="line">      success: function(res)&#123;</div><div class="line">        // success</div><div class="line">        // console.log(res)</div><div class="line">        cb &amp;&amp; cb(res.data)</div><div class="line">      &#125;,</div><div class="line">      fail: function(res) &#123;</div><div class="line">        // fail</div><div class="line">      &#125;,</div><div class="line">      complete: function(res) &#123;</div><div class="line">        // complete</div><div class="line">      &#125;</div><div class="line">    &#125;)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h4 id="设计页面逻辑"><a href="#设计页面逻辑" class="headerlink" title="设计页面逻辑"></a>设计页面逻辑</h4><p>在pages/index/index.js中</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">// 获取应用实例</div><div class="line">var app = getApp();</div><div class="line">Page(&#123;</div><div class="line">  data:&#123;</div><div class="line">    corporationText:&quot;快递公司编码,仅用拼音字母&quot;,</div><div class="line">    numberText:&quot;快递单号，仅用数字&quot;,</div><div class="line">    searchBtnText:&quot;查询&quot;,</div><div class="line">    corporationValue:null,</div><div class="line">    numberValue:null,</div><div class="line">    expressInfo:null</div><div class="line">  &#125;,</div><div class="line">  corInput:function(e)&#123;</div><div class="line">    this.setData(&#123;corporationValue:e.detail.value&#125;)</div><div class="line"></div><div class="line">  &#125;,</div><div class="line">  numInput:function(e)&#123;</div><div class="line">    this.setData(&#123;numberValue:e.detail.value&#125;)</div><div class="line">  &#125;,</div><div class="line">  expressSearch:function()&#123;</div><div class="line">    var thisPage = this</div><div class="line">    app.getExpressInfo(this.data.corporationValue,this.data.numberValue,function(data)&#123;</div><div class="line">      // console.log(data)</div><div class="line">      thisPage.setData(&#123;expressInfo:data&#125;)</div><div class="line">    &#125;)</div><div class="line">  &#125;,</div><div class="line">  onLoad:function(options)&#123;</div><div class="line">    // 页面初始化 options为页面跳转所带来的参数</div><div class="line">  &#125;,</div><div class="line">  onReady:function()&#123;</div><div class="line">    // 页面渲染完成</div><div class="line">  &#125;,</div><div class="line">  onShow:function()&#123;</div><div class="line">    // 页面显示</div><div class="line">  &#125;,</div><div class="line">  onHide:function()&#123;</div><div class="line">    // 页面隐藏</div><div class="line">  &#125;,</div><div class="line">  onUnload:function()&#123;</div><div class="line">    // 页面关闭</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>wx.request(OBJECT)</p>
+<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/api/network-request.html" target="_blank" rel="external">wx.request</a>发起的是 HTTPS 请求。<br><br><a href="http://www.kuaidiapi.cn/" target="_blank" rel="external">快递API</a>
+
                 <hr>
                 
 
@@ -187,7 +213,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#目标"><span class="toc-text">目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具"><span class="toc-text">工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#步骤"><span class="toc-text">步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#生成原始项目"><span class="toc-text">生成原始项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置页面属性"><span class="toc-text">配置页面属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设计页面结构"><span class="toc-text">设计页面结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设计页面布局"><span class="toc-text">设计页面布局</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设计应用逻辑"><span class="toc-text">设计应用逻辑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设计页面逻辑"><span class="toc-text">设计页面逻辑</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接口"><span class="toc-text">接口</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -209,6 +235,9 @@
                     </h5>
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/#小程序"
+                           title="小程序">小程序</a>
+                        
                     </div>
                 </section>
                 
@@ -220,6 +249,10 @@
                     <ul class="list-inline text-center">
                         
                         <li><a href="http://haojen.github.io">马浩珍</a></li>
+                        
+                        <li><a href="https://hexo.io/zh-cn/">Hexo</a></li>
+                        
+                        <li><a href="https://www.diycode.cc/sites">开发者酷站</a></li>
                         
                     </ul>
                 </div>
@@ -266,7 +299,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; The Blog 2017
+                    Copyright &copy; Castor Sugar 2017
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
@@ -303,7 +336,7 @@
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
-        async("http://haojen.github.io/js/jquery.tagcloud.js",function(){
+        async("http://castorSugar.github.io/js/jquery.tagcloud.js",function(){
             $.fn.tagcloud.defaults = {
                 //size: {start: 1, end: 1, unit: 'em'},
                 color: {start: '#bbbbee', end: '#0085a1'},
